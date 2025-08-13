@@ -5,17 +5,14 @@
 <title>404</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-    body {
+    html, body {
         margin: 0;
         padding: 0;
+        width: 100%;
+        height: 100%;
         background-color: #00061A;
         overflow: hidden;
         font-family: 'Share Tech Mono', monospace;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
     }
 
     #overlay {
@@ -30,30 +27,108 @@
 
     #container {
         position: relative;
-        text-align: center;
         z-index: 2;
+        text-align: center;
+        color: #39FF14;
         font-style: italic;
-        color: #39FF14; 
-        text-shadow: 0 0 10px #39FF14, 0 0 20px #39FF14, 0 0 30px #39FF14;
+        text-shadow: 
+            0 0 5px #39FF14,
+            0 0 10px #39FF14,
+            0 0 20px #39FF14,
+            0 0 40px #39FF14,
+            0 0 80px #39FF14;
+        animation: flicker 1.5s infinite;
+        padding: 20px;
+    }
+
+    @keyframes flicker {
+        0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {opacity: 1;}
+        20%, 22%, 24%, 55% {opacity: 0.8;}
     }
 
     h1 {
-        font-size: 8rem;
+        font-size: 15vw;
         margin: 0;
-        font-style: italic;
+        display: inline-block;
+        position: relative;
+    }
+
+    h1.glitch::before, h1.glitch::after {
+        content: '404';
+        position: absolute;
+        left: 0;
+        width: 100%;
+        opacity: 0.8;
+    }
+
+    h1.glitch::before {
+        top: -2px;
+        left: 2px;
+        color: #39FF14;
+        text-shadow: 2px 0 #0ff, -2px 0 #f0f;
+        animation: glitchTop 2s infinite linear alternate-reverse;
+    }
+
+    h1.glitch::after {
+        top: 2px;
+        left: -2px;
+        color: #39FF14;
+        text-shadow: -2px 0 #f0f, 2px 0 #0ff;
+        animation: glitchBottom 2s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitchTop {
+        0%, 20%, 40%, 60%, 80%, 100% {transform: translate(0,0);}
+        10% {transform: translate(-2px,-2px);}
+        30% {transform: translate(2px,-2px);}
+        50% {transform: translate(-2px,2px);}
+        70% {transform: translate(2px,2px);}
+        90% {transform: translate(-1px,-1px);}
+    }
+
+    @keyframes glitchBottom {
+        0%, 20%, 40%, 60%, 80%, 100% {transform: translate(0,0);}
+        10% {transform: translate(2px,2px);}
+        30% {transform: translate(-2px,2px);}
+        50% {transform: translate(2px,-2px);}
+        70% {transform: translate(-2px,-2px);}
+        90% {transform: translate(1px,1px);}
     }
 
     p {
-        font-size: 2rem;
+        font-size: 5vw;
         margin: 0;
-        font-style: italic;
     }
 
     #randomMessages {
-        margin-top: 20px;
-        font-size: 1.5rem;
-        font-style: italic;
-        min-height: 2em;
+        margin-top: 2vh;
+        font-size: 4vw;
+        min-height: 5vh;
+        word-break: break-all;
+        display: inline-block;
+        position: relative;
+    }
+
+    #randomMessages.glitch::before, #randomMessages.glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        left: 0;
+        width: 100%;
+        opacity: 0.8;
+    }
+
+    #randomMessages.glitch::before {
+        top: -1px;
+        left: 1px;
+        text-shadow: 1px 0 #0ff, -1px 0 #f0f;
+        animation: glitchTop 1.5s infinite linear alternate-reverse;
+    }
+
+    #randomMessages.glitch::after {
+        top: 1px;
+        left: -1px;
+        text-shadow: -1px 0 #f0f, 1px 0 #0ff;
+        animation: glitchBottom 1.5s infinite linear alternate-reverse;
     }
 
     canvas {
@@ -62,6 +137,12 @@
         left: 0;
         z-index: 0;
     }
+
+    @media (max-width: 768px) {
+        h1 { font-size: 25vw; }
+        p { font-size: 6vw; }
+        #randomMessages { font-size: 4.5vw; }
+    }
 </style>
 </head>
 <body>
@@ -69,9 +150,9 @@
 <div id="overlay"></div>
 
 <div id="container">
-    <h1>404</h1>
+    <h1 class="glitch">404</h1>
     <p>Página no encontrada</p>
-    <div id="randomMessages"></div>
+    <div id="randomMessages" class="glitch"></div>
 </div>
 
 <script>
@@ -82,8 +163,8 @@
     let height = canvas.height = window.innerHeight;
 
     const letters = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const fontSize = 16;
-    const columns = Math.floor(width / fontSize);
+    let fontSize = 18;
+    let columns = Math.floor(width / fontSize);
     const drops = Array(columns).fill(0);
 
     function drawMatrix() {
@@ -110,6 +191,10 @@
     window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
+        fontSize = width < 768 ? 14 : 18;
+        columns = Math.floor(width / fontSize);
+        drops.length = columns;
+        drops.fill(0);
     });
 
     const randomMessagesDiv = document.getElementById('randomMessages');
@@ -125,6 +210,7 @@
 
     function typeRandomMessage() {
         const msg = generateRandomMessage(Math.floor(Math.random() * 20) + 10);
+        randomMessagesDiv.setAttribute('data-text', msg);
         let index = 0;
         randomMessagesDiv.textContent = '';
 
