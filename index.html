@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Intelectux</title>
 
+  <!-- Fuente Share Tech Mono -->
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
   <style>
@@ -16,6 +17,7 @@
     position: relative;
   }
 
+  /* Canvas para el efecto Matrix */
   canvas#matrix {
     position: fixed;
     top: 0;
@@ -24,6 +26,7 @@
     filter: blur(2px) brightness(0.8);
   }
 
+  /* Capa semitransparente encima del Matrix para oscurecer un poco */
   .matrix-overlay {
     position: fixed;
     top: 0;
@@ -34,6 +37,7 @@
     z-index: -1;
   }
 
+  /* Contenedor principal */
   .search-container {
     display: flex;
     justify-content: center;
@@ -43,8 +47,9 @@
     padding: 20px;
   }
 
+  /* Título con efecto neón */
   .site-title {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Share Tech Mono', monospace; /* Fuente añadida */
     color: #00ff00;
     font-size: 2.5rem;
     font-weight: bold;
@@ -57,11 +62,13 @@
       0 0 40px #00ff00;
   }
 
+  /* Contenedor del buscador */
   .gcse-searchbox {
     width: 100%;
     max-width: 1000px;
   }
 
+  /* Fuerza que el buscador de Google ocupe todo el ancho */
   .gsc-control-cse {
     width: 100% !important;
     background: transparent !important;
@@ -76,16 +83,18 @@
     width: 100% !important;
   }
 
+  /* Input sin colores verdes */
   input.gsc-input {
     width: 100% !important;
     box-sizing: border-box;
     padding: 10px;
     font-size: 1rem;
     background: #fff;
-    color: #000; 
+    color: #000; /* Texto que escribes en negro */
     border: 1px solid #ccc;
   }
 
+  /* Botón de búsqueda normal */
   input.gsc-search-button {
     padding: 10px 16px !important;
     font-size: 1rem;
@@ -95,12 +104,14 @@
     cursor: pointer;
   }
 
+  /* Resultados de búsqueda */
   .gcse-searchresults {
     max-width: 900px;
     width: 100%;
-    color: #cccccc; 
+    color: #cccccc; /* Texto por defecto en resultados */
   }
 
+  /* Responsivo */
   @media (max-width: 768px) {
     .site-title {
       font-size: 2rem;
@@ -118,79 +129,12 @@
       padding: 8px 12px !important;
     }
   }
-
-.terminal-mac {
-  background-color: #1e1e1e;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-  max-width: 900px;
-  width: 100%;
-  font-family: 'Share Tech Mono', monospace;
-  border: 1px solid #333;
-}
-
-.terminal-header {
-  background-color: #2b2b2b;
-  padding: 6px 12px;
-  display: flex;
-  align-items: center;
-}
-
-.terminal-btn {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-right: 6px;
-}
-
-.btn-red { background-color: #ff5f57; }
-.btn-yellow { background-color: #ffbd2e; }
-.btn-green { background-color: #28c940; }
-
-.terminal-body {
-  padding: 10px;
-  color: #00ff00;
-  font-size: 14px;
-  min-height: 300px;
-}
-
-#terminal-prompt {
-  white-space: pre;
-  font-size: 14px;
-  color: #00ff00;
-}
-
-.cursor {
-  color: white;
-  animation: blink-caret 1s step-end infinite;
-}
-
-@keyframes blink-caret {
-  50% { opacity: 0; }
-}
-
-.terminal-body .gsc-control-cse {
-  background: transparent !important;
-  color: #cccccc !important;
-}
-.terminal-body a {
-  color: #0aff0a !important;
-}
-
-@media (max-width: 768px) {
-  .terminal-mac {
-    max-width: 100%;
-    font-size: 12px;
-  }
-  #terminal-prompt {
-    font-size: 12px;
-  }
-}
   </style>
 
+  <!-- Script del buscador de Google -->
   <script async src="https://cse.google.com/cse.js?cx=51df9973ed4b44fad"></script>
 
+  <!-- Google Analytics -->
   <script>
   window.ga = function () { ga.q.push(arguments) }; 
   ga.q = []; 
@@ -204,29 +148,20 @@
 </head>
 <body>
 
+  <!-- Canvas para el efecto Matrix -->
   <canvas id="matrix"></canvas>
-  
+  <!-- Capa oscura encima para suavizar -->
   <div class="matrix-overlay"></div>
 
+  <!-- Buscador -->
   <div class="search-container">
        <div class="site-title">Intelectux</div>
        <div class="gcse-searchbox"></div>
        <br>
-       <div class="terminal-mac">
-          <div class="terminal-header">
-            <div class="terminal-btn btn-red"></div>
-            <div class="terminal-btn btn-yellow"></div>
-            <div class="terminal-btn btn-green"></div>
-          </div>
-           <div class="terminal-body">
-              <div id="terminal-prompt">
-                   anónimo@intelectux:~$<span class="cursor">█</span>
-              </div>
-              <div class="gcse-searchresults"></div>
-           </div>
-       </div>
+       <div class="gcse-searchresults"></div>
   </div>
 
+  <!-- Script efecto Matrix con degradado -->
   <script>
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
@@ -247,10 +182,11 @@
 
       drops.forEach((y, i) => {
         const text = chars.charAt(Math.floor(Math.random() * chars.length));
-        
+
+        // Crear degradado vertical para el efecto Matrix
         const gradient = ctx.createLinearGradient(i * fontSize, y * fontSize - fontSize, i * fontSize, y * fontSize);
-        gradient.addColorStop(0, '#aaffaa'); 
-        gradient.addColorStop(1, '#00ff00'); 
+        gradient.addColorStop(0, '#aaffaa'); // Verde claro arriba
+        gradient.addColorStop(1, '#00ff00'); // Verde fuerte abajo
 
         ctx.fillStyle = gradient;
         ctx.fillText(text, i * fontSize, y * fontSize);
@@ -269,22 +205,6 @@
       canvas.width = window.innerWidth;
     });
   </script>
-
-<script>
-function checkResults() {
-  const resultsBox = document.querySelector('.gcse-searchresults');
-  const prompt = document.getElementById('terminal-prompt');
-  if (!resultsBox) return;
-
-  const hasResults = resultsBox.innerText.trim().length > 0;
-  prompt.style.display = hasResults ? 'none' : 'block';
-}
-
-const observer = new MutationObserver(checkResults);
-observer.observe(document.querySelector('.gcse-searchresults'), { childList: true, subtree: true });
-
-checkResults();
-</script>
 
 </body>
 </html>
