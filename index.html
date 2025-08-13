@@ -34,51 +34,49 @@
       0 0 40px #00ff00;
   }
 
-  /* Ajuste para escritorio */
+  /* Contenedor del buscador */
   .gcse-searchbox {
-    width: 1000px;
+    width: 100%;
+    max-width: 1000px;
   }
 
+  /* Fuerza que el buscador de Google ocupe todo el ancho */
+  .gsc-control-cse {
+    width: 100% !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  table.gsc-search-box {
+    width: 100% !important;
+  }
+
+  td.gsc-input {
+    width: 100% !important;
+  }
+
+  input.gsc-input {
+    width: 100% !important;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  input.gsc-search-button {
+    padding: 10px 16px !important;
+    font-size: 1rem;
+  }
+
+  /* Resultados */
   .gcse-searchresults {
     max-width: 900px;
     width: 100%;
   }
 
-  /* Fuerza a que el contenedor principal de Google ocupe todo */
-  .gsc-control-cse {
-      width: 100% !important;
-      background: transparent !important; /* opcional */
-      border: none !important; /* opcional */
-  }
-
-  /* Hace que la tabla interna use todo el ancho */
-  table.gsc-search-box {
-     width: 100% !important;
-  }
-
-  /* Ajusta la celda donde va el input */
-  td.gsc-input {
-     width: 100% !important;
-  }
-
-  /* Ajusta el input de búsqueda */
-  input.gsc-input {
-     width: 100% !important;
-     box-sizing: border-box;
-  }
-
-  /* Botón de búsqueda */
-  input.gsc-search-button {
-     padding: 8px 16px !important;
-  }
-
-  /* Móviles */
+  /* Responsivo */
   @media (max-width: 768px) {
     body {
       padding: 10px;
-    }
-    .search-container {
-      margin: 0 10px; /* Margen lateral en móviles */
     }
     .site-title {
       font-size: 2rem;
@@ -86,10 +84,22 @@
     .gcse-searchbox,
     .gcse-searchresults {
       width: 100%;
+      max-width: 100%;
+    }
+    input.gsc-input {
+      font-size: 1rem;
+    }
+    input.gsc-search-button {
+      font-size: 0.9rem;
+      padding: 8px 12px !important;
     }
   }
   </style>
+
+  <!-- Script del buscador de Google -->
   <script async src="https://cse.google.com/cse.js?cx=51df9973ed4b44fad"></script>
+
+  <!-- Google Analytics -->
   <script>
   window.ga = function () { ga.q.push(arguments) }; 
   ga.q = []; 
@@ -107,8 +117,7 @@
   <div class="search-container">
        <div class="site-title">Intelectux</div>
        <div class="gcse-searchbox"></div>
-       <!-- Cuadro de resultados -->
-       <br \>
+       <br>
        <div class="gcse-searchresults"></div>
   </div>
 
