@@ -17,7 +17,18 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: -1; 
+    z-index: -2;
+    filter: blur(2px) brightness(0.8);
+  }
+
+  .matrix-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: -1;
   }
 
   .search-container {
@@ -66,24 +77,24 @@
     box-sizing: border-box;
     padding: 10px;
     font-size: 1rem;
-    background: rgba(0, 0, 0, 0.6);
-    color: #0f0;
-    border: 1px solid #0f0;
+    background: #fff;
+    color: #000; 
+    border: 1px solid #ccc;
   }
 
   input.gsc-search-button {
     padding: 10px 16px !important;
     font-size: 1rem;
-    background: #000;
-    color: #0f0;
-    border: 1px solid #0f0;
-    text-shadow: 0 0 5px #0f0;
+    background: #f1f1f1;
+    color: #000;
+    border: 1px solid #ccc;
     cursor: pointer;
   }
 
   .gcse-searchresults {
     max-width: 900px;
     width: 100%;
+    color: #cccccc; 
   }
 
   @media (max-width: 768px) {
@@ -121,6 +132,8 @@
 <body>
 
   <canvas id="matrix"></canvas>
+  
+  <div class="matrix-overlay"></div>
 
   <div class="search-container">
        <div class="site-title">Intelectux</div>
@@ -139,19 +152,22 @@
     const chars = 'アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチッヂツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤャユュヨョラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const fontSize = 14;
     const columns = canvas.width / fontSize;
-
     const drops = Array(Math.floor(columns)).fill(1);
 
     function draw() {
-     
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = '#0F0';
       ctx.font = fontSize + 'px monospace';
 
       drops.forEach((y, i) => {
         const text = chars.charAt(Math.floor(Math.random() * chars.length));
+
+        const gradient = ctx.createLinearGradient(i * fontSize, y * fontSize - fontSize, i * fontSize, y * fontSize);
+        gradient.addColorStop(0, '#aaffaa'); 
+        gradient.addColorStop(1, '#00ff00'); 
+
+        ctx.fillStyle = gradient;
         ctx.fillText(text, i * fontSize, y * fontSize);
 
         if (y * fontSize > canvas.height && Math.random() > 0.975) {
