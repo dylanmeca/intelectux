@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>404</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
     body {
         margin: 0;
         padding: 0;
         background-color: #00061A;
         overflow: hidden;
-        font-family: monospace;
+        font-family: 'Share Tech Mono', monospace;
         color: #39FF14; 
         display: flex;
         flex-direction: column;
@@ -22,16 +23,26 @@
         position: relative;
         text-align: center;
         z-index: 2;
+        font-style: italic;
     }
 
     h1 {
         font-size: 8rem;
         margin: 0;
+        font-style: italic;
     }
 
     p {
         font-size: 2rem;
         margin: 0;
+        font-style: italic;
+    }
+
+    #randomMessages {
+        margin-top: 20px;
+        font-size: 1.5rem;
+        font-style: italic;
+        min-height: 2em;
     }
 
     canvas {
@@ -48,9 +59,11 @@
 <div id="container">
     <h1>404</h1>
     <p>Página no encontrada</p>
+    <div id="randomMessages"></div>
 </div>
 
 <script>
+    // --- Matrix Effect ---
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
@@ -62,11 +75,11 @@
     const columns = Math.floor(width / fontSize);
     const drops = Array(columns).fill(0);
 
-    function draw() {
+    function drawMatrix() {
         ctx.fillStyle = 'rgba(0, 6, 26, 0.05)';
         ctx.fillRect(0, 0, width, height);
 
-        ctx.fillStyle = '#39FF14'; 
+        ctx.fillStyle = '#39FF14';
         ctx.font = fontSize + 'px monospace';
 
         for (let i = 0; i < drops.length; i++) {
@@ -81,12 +94,40 @@
         }
     }
 
-    setInterval(draw, 50);
+    setInterval(drawMatrix, 50);
 
     window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
     });
+
+    const randomMessagesDiv = document.getElementById('randomMessages');
+    const messageLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+    function generateRandomMessage(length = 20) {
+        let msg = '';
+        for (let i = 0; i < length; i++) {
+            msg += messageLetters[Math.floor(Math.random() * messageLetters.length)];
+        }
+        return msg;
+    }
+
+    function typeRandomMessage() {
+        const msg = generateRandomMessage(Math.floor(Math.random() * 20) + 10);
+        let index = 0;
+        randomMessagesDiv.textContent = '';
+
+        const interval = setInterval(() => {
+            randomMessagesDiv.textContent += msg[index];
+            index++;
+            if (index >= msg.length) {
+                clearInterval(interval);
+                setTimeout(typeRandomMessage, 1000); 
+            }
+        }, 50);
+    }
+
+    typeRandomMessage();
 </script>
 </body>
 </html>
