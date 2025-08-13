@@ -158,6 +158,11 @@
 #terminal-prompt {
   white-space: pre;
   font-size: 14px;
+  color: #00ff00;
+}
+
+.cursor {
+  color: white;
   animation: blink-caret 1s step-end infinite;
 }
 
@@ -214,7 +219,9 @@
             <div class="terminal-btn btn-green"></div>
           </div>
            <div class="terminal-body">
-              <div id="terminal-prompt">anónimo@intelectux:~$ </div>
+              <div id="terminal-prompt">
+                   anónimo@intelectux:~$<span class="cursor">█</span>
+              </div>
               <div class="gcse-searchresults"></div>
            </div>
        </div>
@@ -272,7 +279,6 @@ function checkResults() {
   const hasResults = resultsBox.innerText.trim().length > 0;
   prompt.style.display = hasResults ? 'none' : 'block';
 }
-
 
 const observer = new MutationObserver(checkResults);
 observer.observe(document.querySelector('.gcse-searchresults'), { childList: true, subtree: true });
