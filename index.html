@@ -263,5 +263,22 @@
     });
   </script>
 
+<script>
+function checkResults() {
+  const resultsBox = document.querySelector('.gcse-searchresults');
+  const prompt = document.getElementById('terminal-prompt');
+  if (!resultsBox) return;
+
+  const hasResults = resultsBox.innerText.trim().length > 0;
+  prompt.style.display = hasResults ? 'none' : 'block';
+}
+
+
+const observer = new MutationObserver(checkResults);
+observer.observe(document.querySelector('.gcse-searchresults'), { childList: true, subtree: true });
+
+checkResults();
+</script>
+
 </body>
 </html>
