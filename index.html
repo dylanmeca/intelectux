@@ -5,21 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Intelectux</title>
   <style>
-    body {
-      padding: 20px;
-      margin: 0;
-      background-color: #00061A;
-    }
+  body {
+    padding: 20px;
+    margin: 0;
+    background-color: #00061A;
+  }
+    
+  .search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
-    @media (max-width: 768px) {
-      body {
-        padding: 10px;
-      }
-      .gcse-searchbox,
-      .gcse-searchresults {
-        width: 100%;
-      }
+  .gcse-searchbox {
+    max-width: 600px;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 10px;
     }
+    .search-container {
+      margin: 0 10px; 
+    }
+    .gcse-searchbox,
+    .gcse-searchresults {
+      width: 100%;
+    }
+  }
   </style>
   <script async src="https://cse.google.com/cse.js?cx=51df9973ed4b44fad"></script>
   <script>
@@ -36,7 +51,9 @@
 <body>
 
   <!-- Buscador -->
-  <div class="gcse-searchbox"></div>
+  <div class="search-container">
+       <div class="gcse-searchbox"></div>
+  </div>
   
   <!-- Cuadro de resultados -->
   <div class="gcse-searchresults"></div>
