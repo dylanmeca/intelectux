@@ -9,8 +9,10 @@
     padding: 20px;
     margin: 0;
     background-color: #00061A;
+    font-family: Arial, sans-serif;
   }
-    
+
+  /* Contenedor para centrar */
   .search-container {
     display: flex;
     justify-content: center;
@@ -18,17 +20,36 @@
     flex-direction: column;
   }
 
+  /* Título con efecto neón */
+  .site-title {
+    color: #00ff00;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    text-shadow: 
+      0 0 5px #00ff00,
+      0 0 10px #00ff00,
+      0 0 20px #00ff00,
+      0 0 40px #00ff00;
+  }
+
+  /* Ajuste para escritorio */
   .gcse-searchbox {
     max-width: 600px;
     width: 100%;
   }
 
+  /* Móviles */
   @media (max-width: 768px) {
     body {
       padding: 10px;
     }
     .search-container {
-      margin: 0 10px; 
+      margin: 0 10px; /* Margen lateral en móviles */
+    }
+    .site-title {
+      font-size: 2rem;
     }
     .gcse-searchbox,
     .gcse-searchresults {
@@ -52,6 +73,7 @@
 
   <!-- Buscador -->
   <div class="search-container">
+       <div class="site-title">Intelectux</div>
        <div class="gcse-searchbox"></div>
   </div>
   
