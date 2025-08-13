@@ -8,135 +8,180 @@
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      padding: 0;
-      margin: 0;
-      background-color: #000;
-      font-family: Arial, sans-serif;
-      overflow: hidden; 
-    }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    overflow-x: hidden;
+    position: relative;
+  }
 
-    #matrix-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: black;
-    }
+  canvas#matrix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -2;
+    filter: blur(2px) brightness(0.8);
+  }
 
-    .search-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      padding: 20px;
-      position: relative;
-      z-index: 1;
-    }
+  .matrix-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: -1;
+  }
 
+  .search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .site-title {
+    font-family: 'Share Tech Mono', monospace;
+    color: #00ff00;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    text-shadow: 
+      0 0 5px #00ff00,
+      0 0 10px #00ff00,
+      0 0 20px #00ff00,
+      0 0 40px #00ff00;
+  }
+
+  .gcse-searchbox {
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .gsc-control-cse {
+    width: 100% !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  table.gsc-search-box {
+    width: 100% !important;
+  }
+
+  td.gsc-input {
+    width: 100% !important;
+  }
+
+  input.gsc-input {
+    width: 100% !important;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 1rem;
+    background: #fff;
+    color: #000; 
+    border: 1px solid #ccc;
+  }
+
+  input.gsc-search-button {
+    padding: 10px 16px !important;
+    font-size: 1rem;
+    background: #f1f1f1;
+    color: #000;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+
+  .gcse-searchresults {
+    max-width: 900px;
+    width: 100%;
+    color: #cccccc; 
+  }
+
+  @media (max-width: 768px) {
     .site-title {
-      font-family: 'Share Tech Mono', monospace;
-      color: #00ff00;
-      font-size: 2.5rem;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 15px;
-      text-shadow:
-        0 0 5px #00ff00,
-        0 0 10px #00ff00,
-        0 0 20px #00ff00,
-        0 0 40px #00ff00;
+      font-size: 2rem;
     }
-
-    /* Buscador */
-    .gcse-searchbox {
+    .gcse-searchbox,
+    .gcse-searchresults {
       width: 100%;
-      max-width: 1000px;
-    }
-    .gsc-control-cse {
-      width: 100% !important;
-      background: transparent !important;
-      border: none !important;
-    }
-    table.gsc-search-box {
-      width: 100% !important;
-    }
-    td.gsc-input {
-      width: 100% !important;
+      max-width: 100%;
     }
     input.gsc-input {
-      width: 100% !important;
-      box-sizing: border-box;
-      color: black !important; 
-      background-color: white !important; 
+      font-size: 1rem;
     }
     input.gsc-search-button {
-      padding: 8px 16px !important;
+      font-size: 0.9rem;
+      padding: 8px 12px !important;
     }
-
-    .gsc-webResult .gsc-result {
-      color: #cccccc !important;
-    }
-    .gsc-webResult .gsc-result a {
-      color: #00ff00 !important;
-    }
-
-    @media (max-width: 768px) {
-      .site-title {
-        font-size: 2rem;
-      }
-      .gcse-searchbox {
-        max-width: 100%;
-      }
-    }
+  }
   </style>
 
   <script async src="https://cse.google.com/cse.js?cx=51df9973ed4b44fad"></script>
+
+  <script>
+  window.ga = function () { ga.q.push(arguments) }; 
+  ga.q = []; 
+  ga.l = +new Date;
+  
+  ga('create', 'G-J2H6BBV34K', 'auto');
+  ga('set', 'anonymizeIp', false);
+  ga('send', 'pageview');
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
 </head>
 <body>
 
-  <canvas id="matrix-canvas"></canvas>
+  <canvas id="matrix"></canvas>
+  
+  <div class="matrix-overlay"></div>
 
   <div class="search-container">
-    <div class="site-title">Intelectux</div>
-    <div class="gcse-searchbox"></div>
-    <br>
-    <div class="gcse-searchresults"></div>
+       <div class="site-title">Intelectux</div>
+       <div class="gcse-searchbox"></div>
+       <br>
+       <div class="gcse-searchresults"></div>
   </div>
 
   <script>
-    const canvas = document.getElementById('matrix-canvas');
+    const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const letters = 'アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const chars = 'アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチッヂツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤャユュヨョラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const fontSize = 14;
     const columns = canvas.width / fontSize;
     const drops = Array(Math.floor(columns)).fill(1);
 
-    function drawMatrix() {
+    function draw() {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = '#0F0';
       ctx.font = fontSize + 'px monospace';
 
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      drops.forEach((y, i) => {
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        
+        const gradient = ctx.createLinearGradient(i * fontSize, y * fontSize - fontSize, i * fontSize, y * fontSize);
+        gradient.addColorStop(0, '#aaffaa'); 
+        gradient.addColorStop(1, '#00ff00'); 
 
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        ctx.fillStyle = gradient;
+        ctx.fillText(text, i * fontSize, y * fontSize);
+
+        if (y * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
-      }
+      });
     }
 
-    setInterval(drawMatrix, 35);
+    setInterval(draw, 33);
 
     window.addEventListener('resize', () => {
       canvas.height = window.innerHeight;
