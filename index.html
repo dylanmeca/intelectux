@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Intelectux</title>
 
-  <!-- Fuente Share Tech Mono -->
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
   <style>
@@ -17,7 +16,6 @@
     position: relative;
   }
 
-  /* Canvas para el efecto Matrix */
   canvas#matrix {
     position: fixed;
     top: 0;
@@ -26,7 +24,6 @@
     filter: blur(2px) brightness(0.8);
   }
 
-  /* Capa semitransparente encima del Matrix para oscurecer un poco */
   .matrix-overlay {
     position: fixed;
     top: 0;
@@ -37,7 +34,6 @@
     z-index: -1;
   }
 
-  /* Contenedor principal */
   .search-container {
     display: flex;
     justify-content: center;
@@ -47,9 +43,8 @@
     padding: 20px;
   }
 
-  /* Título con efecto neón */
   .site-title {
-    font-family: 'Share Tech Mono', monospace; /* Fuente añadida */
+    font-family: 'Share Tech Mono', monospace; 
     color: #00ff00;
     font-size: 2.5rem;
     font-weight: bold;
@@ -68,7 +63,6 @@
     max-width: 1000px;
   }
 
-  /* Fuerza que el buscador de Google ocupe todo el ancho */
   .gsc-control-cse {
     width: 100% !important;
     background: transparent !important;
@@ -83,18 +77,16 @@
     width: 100% !important;
   }
 
-  /* Input sin colores verdes */
   input.gsc-input {
     width: 100% !important;
     box-sizing: border-box;
     padding: 10px;
     font-size: 1rem;
     background: #fff;
-    color: #000; /* Texto que escribes en negro */
+    color: #000; 
     border: 1px solid #ccc;
   }
 
-  /* Botón de búsqueda normal */
   input.gsc-search-button {
     padding: 10px 16px !important;
     font-size: 1rem;
@@ -104,14 +96,12 @@
     cursor: pointer;
   }
 
-  /* Resultados de búsqueda */
   .gcse-searchresults {
     max-width: 900px;
     width: 100%;
-    color: #cccccc; /* Texto por defecto en resultados */
+    color: #cccccc; 
   }
 
-  /* Responsivo */
   @media (max-width: 768px) {
     .site-title {
       font-size: 2rem;
@@ -131,10 +121,8 @@
   }
   </style>
 
-  <!-- Script del buscador de Google -->
   <script async src="https://cse.google.com/cse.js?cx=51df9973ed4b44fad"></script>
 
-  <!-- Google Analytics -->
   <script>
   window.ga = function () { ga.q.push(arguments) }; 
   ga.q = []; 
@@ -148,12 +136,10 @@
 </head>
 <body>
 
-  <!-- Canvas para el efecto Matrix -->
   <canvas id="matrix"></canvas>
-  <!-- Capa oscura encima para suavizar -->
+  
   <div class="matrix-overlay"></div>
 
-  <!-- Buscador -->
   <div class="search-container">
        <div class="site-title">Intelectux</div>
        <div class="gcse-searchbox"></div>
@@ -161,7 +147,6 @@
        <div class="gcse-searchresults"></div>
   </div>
 
-  <!-- Script efecto Matrix con degradado -->
   <script>
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
@@ -183,10 +168,9 @@
       drops.forEach((y, i) => {
         const text = chars.charAt(Math.floor(Math.random() * chars.length));
 
-        // Crear degradado vertical para el efecto Matrix
         const gradient = ctx.createLinearGradient(i * fontSize, y * fontSize - fontSize, i * fontSize, y * fontSize);
-        gradient.addColorStop(0, '#aaffaa'); // Verde claro arriba
-        gradient.addColorStop(1, '#00ff00'); // Verde fuerte abajo
+        gradient.addColorStop(0, '#aaffaa'); 
+        gradient.addColorStop(1, '#00ff00'); 
 
         ctx.fillStyle = gradient;
         ctx.fillText(text, i * fontSize, y * fontSize);
