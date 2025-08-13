@@ -6,21 +6,29 @@
   <title>Intelectux</title>
   <style>
   body {
-    padding: 20px;
     margin: 0;
-    background-color: #00061A;
     font-family: Arial, sans-serif;
+    background-color: #000;
+    overflow-x: hidden;
+    position: relative;
   }
 
-  /* Contenedor para centrar */
+  canvas#matrix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1; 
+  }
+
   .search-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
   }
 
-  /* Título con efecto neón */
   .site-title {
     color: #00ff00;
     font-size: 2.5rem;
@@ -34,13 +42,11 @@
       0 0 40px #00ff00;
   }
 
-  /* Contenedor del buscador */
   .gcse-searchbox {
     width: 100%;
     max-width: 1000px;
   }
 
-  /* Fuerza que el buscador de Google ocupe todo el ancho */
   .gsc-control-cse {
     width: 100% !important;
     background: transparent !important;
@@ -60,24 +66,27 @@
     box-sizing: border-box;
     padding: 10px;
     font-size: 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    color: #0f0;
+    border: 1px solid #0f0;
   }
 
   input.gsc-search-button {
     padding: 10px 16px !important;
     font-size: 1rem;
+    background: #000;
+    color: #0f0;
+    border: 1px solid #0f0;
+    text-shadow: 0 0 5px #0f0;
+    cursor: pointer;
   }
 
-  /* Resultados */
   .gcse-searchresults {
     max-width: 900px;
     width: 100%;
   }
 
-  /* Responsivo */
   @media (max-width: 768px) {
-    body {
-      padding: 10px;
-    }
     .site-title {
       font-size: 2rem;
     }
@@ -96,10 +105,8 @@
   }
   </style>
 
-  <!-- Script del buscador de Google -->
   <script async src="https://cse.google.com/cse.js?cx=51df9973ed4b44fad"></script>
 
-  <!-- Google Analytics -->
   <script>
   window.ga = function () { ga.q.push(arguments) }; 
   ga.q = []; 
@@ -113,13 +120,54 @@
 </head>
 <body>
 
-  <!-- Buscador -->
+  <canvas id="matrix"></canvas>
+
   <div class="search-container">
        <div class="site-title">Intelectux</div>
        <div class="gcse-searchbox"></div>
        <br>
        <div class="gcse-searchresults"></div>
   </div>
+
+  <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const chars = 'アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチッヂツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤャユュヨョラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+     
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#0F0';
+      ctx.font = fontSize + 'px monospace';
+
+      drops.forEach((y, i) => {
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(text, i * fontSize, y * fontSize);
+
+        if (y * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      });
+    }
+
+    setInterval(draw, 33);
+
+    window.addEventListener('resize', () => {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    });
+  </script>
 
 </body>
 </html>
