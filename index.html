@@ -118,6 +118,51 @@
       padding: 8px 12px !important;
     }
   }
+
+.terminal-mac {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  max-width: 900px;
+  width: 100%;
+  font-family: 'Share Tech Mono', monospace;
+  border: 1px solid #333;
+}
+
+.terminal-header {
+  background-color: #2b2b2b;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+}
+
+.terminal-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.btn-red { background-color: #ff5f57; }
+.btn-yellow { background-color: #ffbd2e; }
+.btn-green { background-color: #28c940; }
+
+.terminal-body {
+  padding: 10px;
+  color: #00ff00;
+  font-size: 14px;
+  min-height: 300px;
+}
+
+.terminal-body .gsc-control-cse {
+  background: transparent !important;
+  color: #00ff00 !important;
+}
+
+.terminal-body a {
+  color: #0aff0a !important;
+}
   </style>
 
   <script async src="https://cse.google.com/cse.js?cx=51df9973ed4b44fad"></script>
@@ -143,7 +188,16 @@
        <div class="site-title">Intelectux</div>
        <div class="gcse-searchbox"></div>
        <br>
-       <div class="gcse-searchresults"></div>
+       <div class="terminal-mac">
+          <div class="terminal-header">
+            <div class="terminal-btn btn-red"></div>
+            <div class="terminal-btn btn-yellow"></div>
+            <div class="terminal-btn btn-green"></div>
+          </div>
+          <div class="terminal-body">
+            <div class="gcse-searchresults"></div>
+          </div>
+       </div>
   </div>
 
   <script>
