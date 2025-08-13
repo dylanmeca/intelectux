@@ -155,13 +155,32 @@
   min-height: 300px;
 }
 
-.terminal-body .gsc-control-cse {
-  background: transparent !important;
-  color: #00ff00 !important;
+#terminal-prompt {
+  white-space: pre;
+  font-size: 14px;
+  animation: blink-caret 1s step-end infinite;
 }
 
+@keyframes blink-caret {
+  50% { opacity: 0; }
+}
+
+.terminal-body .gsc-control-cse {
+  background: transparent !important;
+  color: #cccccc !important;
+}
 .terminal-body a {
   color: #0aff0a !important;
+}
+
+@media (max-width: 768px) {
+  .terminal-mac {
+    max-width: 100%;
+    font-size: 12px;
+  }
+  #terminal-prompt {
+    font-size: 12px;
+  }
 }
   </style>
 
@@ -194,9 +213,10 @@
             <div class="terminal-btn btn-yellow"></div>
             <div class="terminal-btn btn-green"></div>
           </div>
-          <div class="terminal-body">
-            <div class="gcse-searchresults"></div>
-          </div>
+           <div class="terminal-body">
+              <div id="terminal-prompt">anónimo@intelectux:~$ </div>
+              <div class="gcse-searchresults"></div>
+           </div>
        </div>
   </div>
 
